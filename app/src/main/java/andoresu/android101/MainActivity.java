@@ -1,10 +1,14 @@
 package andoresu.android101;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,31 +20,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Spinner s = (Spinner) findViewById(R.id.ageSpinner);
+        String age[] = new String[20];
+        for (int i=0 ; i < 20 ; i++){
+            age[i] = i+18+"";
+        }
+        ArrayAdapter<String> ages = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, age);
+        s.setAdapter(ages);
     }
 
-    int sw1 = 0;
-    int sw2 = 0;
 
-    public void cambiarColor2(View view) {
-        Button btn1 = (Button) findViewById(R.id.btn1);
-        if(sw1==0){
-            btn1.setBackgroundColor(Color.BLACK);
-            sw1=1;
-        }else{
-            btn1.setBackgroundColor(Color.BLUE);
-            sw1=0;
-        }
+    public void cambiarPantalla(View view) {
 
-    }
+        Intent i = new Intent(this, Main2Activity.class);
 
-    public void cambiarColor1(View view) {
-        Button btn2 = (Button) findViewById(R.id.btn2);
-        if(sw2==0){
-            btn2.setBackgroundColor(Color.GREEN);
-            sw2=1;
-        }else{
-            btn2.setBackgroundColor(Color.YELLOW);
-            sw2=0;
-        }
+        EditText et = (EditText) findViewById(R.id.tbName);
+        String name = et.getText().toString();
+        i.putExtra("Name",name);
+        Spinner s = (Spinner) findViewById(R.id.ageSpinner);
+        int years = Integer.parseInt(s.getSelectedItem().toString());
+        i.putExtra("Years",years);
+        startActivity(i);
+
     }
 }
